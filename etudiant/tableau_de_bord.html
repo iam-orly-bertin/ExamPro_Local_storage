@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#3a1020">
+    <title>ExamPro - Tableau de bord</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <link rel="stylesheet" href="css/etudiant.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+</head>
+
+<body data-page="tableau_de_bord">
+    <header id="entete"></header>
+    <main>
+        <div class="entete-page">
+            <div>
+                <h1 id="salutation">Bonjour</h1>
+                <p class="sous-titre" id="dateJour"></p>
+            </div>
+            <div class="actions"><a href="examens.html" class="bouton"><span data-icone="file-text"></span>Voir les examens</a></div>
+        </div>
+        <section class="grille">
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="file-text" data-taille="22"></span>
+                <div class="stat-texte"><strong id="nbAPasser">0</strong><span>Examens à passer</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="clipboard-check" data-taille="22"></span>
+                <div class="stat-texte"><strong id="nbPasses">0</strong><span>Examens passés</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="trending-up" data-taille="22"></span>
+                <div class="stat-texte"><strong id="moyenne">0 %</strong><span>Moyenne</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="award" data-taille="22"></span>
+                <div class="stat-texte"><strong id="meilleure">0 %</strong><span>Meilleure note</span></div>
+            </article>
+        </section>
+        <section class="carte">
+            <h2>Prochain examen à passer</h2>
+            <div id="prochainExamen"><p class="vide">Chargement...</p></div>
+        </section>
+        <section class="carte">
+            <h2>Mes derniers résultats</h2>
+            <div class="tableau-defilant">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Examen</th>
+                            <th>Score</th>
+                            <th>Note</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="derniersResultats"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="../base_locale.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/commun.js"></script>
+    <script src="js/tableau_de_bord.js"></script>
+</body>
+
+</html>

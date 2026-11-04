@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3a1020">
+    <title>ExamPro - Tableau de bord</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <link rel="stylesheet" href="css/admin.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+</head>
+
+<body data-page="tableau_de_bord">
+    <header id="entete"></header>
+    <main>
+        <div class="entete-page">
+            <div>
+                <h1 id="salutation">Bonjour</h1>
+                <p class="sous-titre" id="dateJour"></p>
+            </div>
+        </div>
+        <section class="grille">
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="users" data-taille="22"></span>
+                <div class="stat-texte"><strong id="nbEtudiants">0</strong><span>Étudiants</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="book-open" data-taille="22"></span>
+                <div class="stat-texte"><strong id="nbCours">0</strong><span>Cours</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="file-text" data-taille="22"></span>
+                <div class="stat-texte"><strong id="nbExamens">0</strong><span>Examens</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="clipboard-check" data-taille="22"></span>
+                <div class="stat-texte"><strong id="nbResultats">0</strong><span>Résultats</span></div>
+            </article>
+        </section>
+        <section class="carte">
+            <h2>Derniers utilisateurs inscrits</h2>
+            <div class="tableau-defilant">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Rôle</th>
+                        </tr>
+                    </thead>
+                    <tbody id="derniersUtilisateurs"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="../base_locale.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/commun.js"></script>
+    <script src="js/tableau_de_bord.js"></script>
+</body>
+
+</html>

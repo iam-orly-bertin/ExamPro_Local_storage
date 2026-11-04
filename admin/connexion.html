@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3a1020">
+    <title>ExamPro - Connexion administrateur</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <link rel="stylesheet" href="css/admin.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+</head>
+
+<body data-page="connexion">
+    <main class="connexion">
+        <aside class="connexion-marque">
+            <a class="logo" href="connexion.html" aria-label="ExamPro">
+                <span class="logo-marque" data-icone="graduation-cap" data-taille="20"></span>
+                <span class="logo-texte"><strong>ExamPro</strong><small>Administration</small></span>
+            </a>
+            <div>
+                <h2>Vos examens, de la création à la correction.</h2>
+                <p>Gérez les cours, les questions et les résultats de vos étudiants depuis un seul espace.</p>
+            </div>
+        </aside>
+        <section class="connexion-formulaire">
+            <form id="formulaireConnexion" novalidate>
+                <h1>Connexion</h1>
+                <p class="sous-titre">Espace réservé aux administrateurs.</p>
+                <div class="champ">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="admin@exemple.com" autocomplete="username">
+                </div>
+                <div class="champ">
+                    <label for="motDePasse">Mot de passe</label>
+                    <div class="mot-de-passe">
+                        <input type="password" id="motDePasse" autocomplete="current-password">
+                        <button type="button" id="afficherMotDePasse" class="bascule-mot-de-passe" aria-label="Afficher le mot de passe" aria-pressed="false"></button>
+                    </div>
+                </div>
+                <button type="submit" id="boutonConnexion" class="bouton">Se connecter</button>
+            </form>
+        </section>
+    </main>
+    <script src="../base_locale.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/commun.js"></script>
+    <script src="js/connexion.js"></script>
+</body>
+
+</html>

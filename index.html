@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#3a1020">
+    <meta name="description"
+        content="ExamPro : la plateforme d’examens en ligne pour les enseignants et les étudiants.">
+    <title>ExamPro - Plateforme d’examens en ligne</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+    <style>
+        /* =====================================================
+           ExamPro : page d’accueil
+           Même identité que les espaces admin et étudiant
+           (lie-de-vin, safran, pierre ; thème clair et sombre).
+           ===================================================== */
+        :root {
+            --police: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            --fond: #f5f4f2;
+            --surface: #ffffff;
+            --surface-2: #faf9f7;
+            --bordure: #e6e2dc;
+            --bordure-forte: #cfc8bf;
+            --texte: #211c18;
+            --discret: #6b635b;
+            --principal: #8a2543;
+            --principal-fonce: #701c36;
+            --lien: #8a2543;
+            --principal-doux: #f7e8ed;
+            --accent: #e0a63f;
+            --succes: #17653f;
+            --succes-fond: #e2f3ea;
+            --danger: #b3261e;
+            --danger-fond: #fbe8e6;
+            --menu-fond: #3a1020;
+            --menu-texte: rgba(255, 255, 255, .74);
+            --ombre: 0 16px 40px rgba(33, 28, 24, .22);
+            --rayon: 12px;
+            --rayon-champ: 8px;
+            --haut-barre: 64px;
+            color-scheme: light;
+        }
+
+        html.sombre {
+            color-scheme: dark;
+            --fond: #161210;
+            --surface: #211b18;
+            --surface-2: #1b1613;
+            --bordure: #373029;
+            --bordure-forte: #4d433b;
+            --texte: #f3eee8;
+            --discret: #aaa095;
+            --principal: #c64363;
+            --principal-fonce: #b03856;
+            --lien: #f09ab0;
+            --principal-doux: #3b1b26;
+            --succes: #6cc795;
+            --succes-fond: #14301f;
+            --danger: #f0847b;
+            --danger-fond: #3a1a18;
+            --menu-fond: #230b14;
+            --ombre: 0 16px 40px rgba(0, 0, 0, .55);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--haut-barre) + 12px);
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--police);
+            font-size: 16px;
+            line-height: 1.6;
+            background: var(--fond);
+            color: var(--texte);
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: -.02em;
+        }
+
+        p {
+            margin: 0 0 12px;
+        }
+
+        a {
+            color: var(--lien);
+        }
+
+        .icone {
+            flex: none;
+            display: block;
+        }
+
+        .conteneur {
+            width: min(1160px, 100% - 48px);
+            margin: 0 auto;
+        }
+
+        :focus-visible {
+            outline: 3px solid color-mix(in srgb, var(--principal) 55%, transparent);
+            outline-offset: 2px;
+        }
+
+        ::selection {
+            background: var(--principal-doux);
+            color: var(--texte);
+        }
+
+        /* ---------- Boutons ---------- */
+        .bouton {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 10px 20px;
+            background: var(--principal);
+            color: #fff;
+            border: 1px solid transparent;
+            border-radius: var(--rayon-champ);
+            font: inherit;
+            font-weight: 650;
+            line-height: 1.2;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background .15s, border-color .15s, color .15s;
+        }
+
+        .bouton:hover {
+            background: var(--principal-fonce);
+        }
+
+        .bouton:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        .bouton.secondaire {
+            background: var(--surface);
+            color: var(--texte);
+            border-color: var(--bordure-forte);
+        }
+
+        .bouton.secondaire:hover {
+            background: var(--surface-2);
+            border-color: var(--discret);
+        }
+
+        .bouton.accent {
+            background: var(--accent);
+            color: #3a1020;
+        }
+
+        .bouton.accent:hover {
+            background: #ebb651;
+        }
+
+        .bouton.clair {
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            border-color: rgba(255, 255, 255, .3);
+        }
+
+        .bouton.clair:hover {
+            background: rgba(255, 255, 255, .18);
+        }
+
+        .bouton.petit {
+            min-height: 36px;
+            padding: 6px 14px;
+            font-size: 14px;
+        }
+
+        .bouton.grand {
+            min-height: 50px;
+            padding: 12px 26px;
+            font-size: 16px;
+        }
+
+        /* ---------- Barre de navigation ---------- */
+        .barre {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: var(--menu-fond);
+            color: #fff;
+            padding-top: env(safe-area-inset-top, 0px);
+        }
+
+        .barre .conteneur {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            min-height: var(--haut-barre);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            text-decoration: none;
+            margin-right: auto;
+        }
+
+        .logo-marque {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #3a1020;
+        }
+
+        .logo-texte {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .logo-texte strong {
+            font-size: 18px;
+            font-weight: 750;
+            letter-spacing: -.01em;
+        }
+
+        .logo-texte small {
+            color: var(--menu-texte);
+            font-size: 12.5px;
+        }
+
+        .liens-barre {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .liens-barre a {
+            padding: 8px 14px;
+            border-radius: 9px;
+            color: var(--menu-texte);
+            font-weight: 550;
+            font-size: 15px;
+            text-decoration: none;
+            transition: background .15s, color .15s;
+        }
+
+        .liens-barre a:hover {
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+        }
+
+        .actions-barre {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bouton-icone {
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, .1);
+            border: 0;
+            border-radius: 9px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .bouton-icone:hover {
+            background: rgba(255, 255, 255, .18);
+        }
+
+        #boutonMenu {
+            display: none;
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            position: relative;
+            color: #fff;
+            background-color: var(--menu-fond);
+            background-image:
+                linear-gradient(rgba(255, 255, 255, .09) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .09) 1px, transparent 1px),
+                linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px);
+            background-size: 64px 64px, 64px 64px, 16px 16px, 16px 16px;
+        }
+
+        .hero .conteneur {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            align-items: center;
+            gap: 56px;
+            padding: 72px 0 88px;
+        }
+
+        .etat-serveur {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .1);
+            color: var(--menu-texte);
+            font-size: 13.5px;
+            font-weight: 550;
+        }
+
+        .etat-serveur .point {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        .etat-serveur.en-ligne .point {
+            background: #6cc795;
+            animation: none;
+        }
+
+        .etat-serveur.hors-ligne .point {
+            background: #f0847b;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: .35;
+            }
+        }
+
+        .hero h1 {
+            max-width: 14ch;
+            font-size: clamp(34px, 5vw, 54px);
+            font-weight: 750;
+            line-height: 1.08;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .hero .intro {
+            max-width: 52ch;
+            margin: 20px 0 30px;
+            color: var(--menu-texte);
+            font-size: 18px;
+        }
+
+        .boutons-hero {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .bandeau {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+            padding: 12px 16px;
+            max-width: 520px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            font-size: 14.5px;
+        }
+
+        /* ---------- Démonstration ---------- */
+        .demo {
+            padding: 24px;
+            background: var(--surface);
+            color: var(--texte);
+            border: 1px solid var(--bordure);
+            border-radius: 14px;
+            box-shadow: var(--ombre);
+        }
+
+        .demo-entete {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .etiquette {
+            color: var(--lien);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: var(--surface-2);
+            border: 1px solid var(--bordure);
+            color: var(--discret);
+            font-size: 12.5px;
+            font-weight: 650;
+        }
+
+        .demo h3 {
+            margin-bottom: 16px;
+            font-size: 19px;
+            font-weight: 650;
+            line-height: 1.4;
+        }
+
+        #choixDemo {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choix-demo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--surface);
+            color: var(--texte);
+            border: 1px solid var(--bordure-forte);
+            border-radius: 10px;
+            font: inherit;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color .15s, background .15s;
+        }
+
+        .choix-demo:hover:not(:disabled) {
+            border-color: var(--principal);
+            background: var(--surface-2);
+        }
+
+        .choix-demo:disabled {
+            cursor: default;
+        }
+
+        .choix-demo .lettre {
+            flex: none;
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: var(--surface-2);
+            border: 1px solid var(--bordure);
+            color: var(--discret);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .choix-demo.selectionne {
+            border-color: var(--principal);
+            background: var(--principal-doux);
+        }
+
+        .choix-demo.selectionne .lettre {
+            background: var(--principal);
+            border-color: var(--principal);
+            color: #fff;
+        }
+
+        .choix-demo.juste {
+            border-color: var(--succes);
+            background: var(--succes-fond);
+        }
+
+        .choix-demo.juste .lettre {
+            background: var(--succes);
+            border-color: var(--succes);
+            color: #fff;
+        }
+
+        .choix-demo.faux {
+            border-color: var(--danger);
+            background: var(--danger-fond);
+        }
+
+        .choix-demo.faux .lettre {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: #fff;
+        }
+
+        .demo-pied {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid var(--bordure);
+        }
+
+        #messageDemo {
+            margin: 0;
+            color: var(--discret);
+            font-size: 14.5px;
+        }
+
+        #messageDemo.juste {
+            color: var(--succes);
+            font-weight: 650;
+        }
+
+        #messageDemo.faux {
+            color: var(--danger);
+            font-weight: 650;
+        }
+
+        /* ---------- Sections ---------- */
+        section.bloc {
+            padding: 88px 0;
+        }
+
+        section.bloc.alt {
+            background: var(--surface);
+            border-block: 1px solid var(--bordure);
+        }
+
+        .titre-section {
+            max-width: 640px;
+            margin-bottom: 44px;
+        }
+
+        .titre-section .etiquette {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .titre-section h2 {
+            font-size: clamp(26px, 3.4vw, 36px);
+            font-weight: 750;
+        }
+
+        .titre-section p {
+            margin: 12px 0 0;
+            color: var(--discret);
+            font-size: 17px;
+        }
+
+        .carte {
+            background: var(--surface);
+            border: 1px solid var(--bordure);
+            border-radius: var(--rayon);
+            padding: 24px;
+        }
+
+        .alt .carte {
+            background: var(--surface-2);
+        }
+
+        .pastille {
+            display: grid;
+            place-items: center;
+            width: 46px;
+            height: 46px;
+            margin-bottom: 16px;
+            border-radius: 11px;
+            background: var(--principal-doux);
+            color: var(--lien);
+        }
+
+        .grille-fonctions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .fonction h3 {
+            margin-bottom: 8px;
+            font-size: 18px;
+            font-weight: 650;
+        }
+
+        .fonction p {
+            margin: 0;
+            color: var(--discret);
+            font-size: 15px;
+        }
+
+        .etapes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            counter-reset: etape;
+        }
+
+        .etape {
+            position: relative;
+        }
+
+        .etape::before {
+            counter-increment: etape;
+            content: counter(etape);
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            margin-bottom: 16px;
+            border-radius: 50%;
+            background: var(--menu-fond);
+            color: var(--accent);
+            font-weight: 750;
+        }
+
+        html.sombre .etape::before {
+            background: var(--principal-doux);
+            color: var(--lien);
+        }
+
+        .etape h3 {
+            margin-bottom: 8px;
+            font-size: 17px;
+            font-weight: 650;
+        }
+
+        .etape p {
+            margin: 0;
+            color: var(--discret);
+            font-size: 15px;
+        }
+
+        .espaces {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .espace {
+            display: flex;
+            flex-direction: column;
+            padding: 32px;
+        }
+
+        .espace h3 {
+            margin-bottom: 8px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .espace>p {
+            color: var(--discret);
+        }
+
+        .espace ul {
+            list-style: none;
+            margin: 8px 0 28px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .espace li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 15px;
+        }
+
+        .espace li .icone {
+            margin-top: 3px;
+            color: var(--succes);
+        }
+
+        .espace .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .espace .note {
+            margin: 18px 0 0;
+            color: var(--discret);
+            font-size: 13.5px;
+        }
+
+        .espace code {
+            padding: 1px 6px;
+            background: var(--surface-2);
+            border: 1px solid var(--bordure);
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        /* ---------- Questions fréquentes ---------- */
+        .faq {
+            max-width: 820px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq details {
+            background: var(--surface);
+            border: 1px solid var(--bordure);
+            border-radius: 10px;
+        }
+
+        .faq summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 20px;
+            font-weight: 650;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .faq summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq summary::after {
+            content: "";
+            flex: none;
+            width: 9px;
+            height: 9px;
+            margin-right: 4px;
+            border-right: 2px solid var(--discret);
+            border-bottom: 2px solid var(--discret);
+            transform: rotate(45deg);
+            transition: transform .2s;
+        }
+
+        .faq details[open] summary::after {
+            transform: rotate(-135deg);
+        }
+
+        .faq details[open] summary {
+            border-bottom: 1px solid var(--bordure);
+        }
+
+        .faq details p {
+            margin: 0;
+            padding: 16px 20px;
+            color: var(--discret);
+        }
+
+        /* ---------- Appel final ---------- */
+        .appel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            padding: 44px 48px;
+            border: 0;
+            border-radius: 16px;
+            color: #fff;
+            background-color: var(--menu-fond);
+            background-image:
+                linear-gradient(rgba(255, 255, 255, .06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .06) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+
+        .appel h2 {
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 750;
+        }
+
+        .appel p {
+            margin: 8px 0 0;
+            color: var(--menu-texte);
+            font-size: 17px;
+        }
+
+        .appel .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* ---------- Pied de page ---------- */
+        footer {
+            padding: 36px 0 44px;
+            border-top: 1px solid var(--bordure);
+            color: var(--discret);
+            font-size: 14.5px;
+        }
+
+        footer .conteneur {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px 32px;
+        }
+
+        .liens-pied {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 22px;
+        }
+
+        .liens-pied a {
+            color: var(--discret);
+            text-decoration: none;
+            font-weight: 550;
+        }
+
+        .liens-pied a:hover {
+            color: var(--lien);
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* ---------- Tablette ---------- */
+        @media (max-width: 960px) {
+            .hero .conteneur {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 48px 0 56px;
+            }
+
+            .hero h1 {
+                max-width: 18ch;
+            }
+
+            .grille-fonctions {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .etapes {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .espaces {
+                grid-template-columns: 1fr;
+            }
+
+            section.bloc {
+                padding: 64px 0;
+            }
+        }
+
+        /* ---------- Mobile : menu burger en haut à droite ---------- */
+        @media (max-width: 800px) {
+            #boutonMenu {
+                display: grid;
+            }
+
+            .barre .conteneur {
+                gap: 10px;
+            }
+
+            .actions-barre .bouton {
+                display: none;
+            }
+
+            .liens-barre {
+                position: absolute;
+                top: calc(var(--haut-barre) + env(safe-area-inset-top, 0px));
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 2px;
+                padding: 8px 16px 16px;
+                background: var(--menu-fond);
+                border-top: 1px solid rgba(255, 255, 255, .12);
+                box-shadow: var(--ombre);
+                display: none;
+            }
+
+            .menu-ouvert .liens-barre {
+                display: flex;
+            }
+
+            .liens-barre a {
+                padding: 12px 14px;
+                font-size: 16px;
+            }
+
+            .liens-barre .lien-connexion {
+                display: block;
+                margin-top: 8px;
+                padding: 12px 14px;
+                text-align: center;
+                background: var(--accent);
+                color: #3a1020;
+                font-weight: 650;
+            }
+
+            .liens-barre .lien-connexion:hover {
+                background: #ebb651;
+                color: #3a1020;
+            }
+        }
+
+        @media (min-width: 801px) {
+            .lien-connexion {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .conteneur {
+                width: calc(100% - 32px);
+            }
+
+            .hero .intro {
+                font-size: 16.5px;
+            }
+
+            .boutons-hero .bouton {
+                flex: 1 1 100%;
+            }
+
+            .demo {
+                padding: 18px;
+            }
+
+            .grille-fonctions,
+            .etapes {
+                grid-template-columns: 1fr;
+            }
+
+            .titre-section {
+                margin-bottom: 30px;
+            }
+
+            section.bloc {
+                padding: 52px 0;
+            }
+
+            .espace {
+                padding: 24px 20px;
+            }
+
+            .espace .actions .bouton {
+                flex: 1 1 100%;
+            }
+
+            .appel {
+                padding: 32px 22px;
+            }
+
+            .appel .actions,
+            .appel .actions .bouton {
+                width: 100%;
+            }
+
+            footer .conteneur {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVIGATION ================= -->
+    <header class="barre" id="barre">
+        <div class="conteneur">
+            <a class="logo" href="#accueil" aria-label="ExamPro, haut de page">
+                <span class="logo-marque" data-icone="graduation-cap" data-taille="20"></span>
+                <span class="logo-texte"><strong>ExamPro</strong><small>Examens en ligne</small></span>
+            </a>
+            <nav class="liens-barre" id="liensBarre" aria-label="Navigation principale">
+                <a href="#fonctionnalites">Fonctionnalités</a>
+                <a href="#fonctionnement">Fonctionnement</a>
+                <a href="#espaces">Espaces</a>
+                <a href="#faq">FAQ</a>
+                <a href="etudiant/connexion.html" class="lien-connexion">Se connecter</a>
+            </nav>
+            <div class="actions-barre">
+                <button type="button" id="boutonTheme" class="bouton-icone"></button>
+                <a href="etudiant/connexion.html" class="bouton accent petit">Se connecter</a>
+                <button type="button" id="boutonMenu" class="bouton-icone" aria-label="Ouvrir le menu"
+                    aria-expanded="false" aria-controls="liensBarre"></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ================= ACCUEIL ================= -->
+        <section class="hero" id="accueil">
+            <div class="conteneur">
+                <div>
+                    <div class="etat-serveur en-ligne" id="etatServeur">
+                        <span class="point"></span>
+                        <span id="texteEtat">Mode local : aucun serveur nécessaire</span>
+                    </div>
+                    <h1>Vos examens, de la création à la <em>correction</em>.</h1>
+                    <p class="intro">ExamPro permet aux enseignants de créer des examens à choix multiples et aux
+                        étudiants de les passer en ligne, avec un chronomètre automatique et une note
+                        affichée dès l’envoi.</p>
+                    <div class="boutons-hero">
+                        <a href="etudiant/connexion.html" class="bouton accent grand"><span
+                                data-icone="user"></span>Espace étudiant</a>
+                        <a href="admin/connexion.html" class="bouton clair grand"><span
+                                data-icone="shield"></span>Espace enseignant</a>
+                    </div>
+
+                    <!-- Affiché seulement si quelqu’un est déjà connecté (voir le JavaScript) -->
+                    <div class="bandeau" id="bandeauConnecte" hidden>
+                        <span id="texteConnecte"></span>
+                        <a href="#" class="bouton accent petit" id="lienEspace">Continuer</a>
+                    </div>
+                </div>
+
+                <!-- Démonstration interactive -->
+                <aside class="demo" aria-label="Démonstration d’un examen">
+                    <div class="demo-entete">
+                        <span class="etiquette">Démo • Question 1 sur 1</span>
+                        <span class="badge">Essayez</span>
+                    </div>
+                    <h3 id="questionDemo"></h3>
+                    <div id="choixDemo"></div>
+                    <div class="demo-pied">
+                        <p id="messageDemo">Choisissez une réponse.</p>
+                        <div>
+                            <button type="button" class="bouton petit" id="boutonVerifier" disabled>Vérifier</button>
+                            <button type="button" class="bouton secondaire petit" id="boutonRejouer"
+                                hidden>Rejouer</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ================= FONCTIONNALITÉS ================= -->
+        <section class="bloc" id="fonctionnalites">
+            <div class="conteneur">
+                <div class="titre-section">
+                    <span class="etiquette">Fonctionnalités</span>
+                    <h2>Tout pour évaluer sereinement</h2>
+                    <p>Des outils simples pour l’enseignant, une expérience claire pour l’étudiant.</p>
+                </div>
+                <div class="grille-fonctions">
+                    <article class="carte fonction">
+                        <span class="pastille" data-icone="book-open" data-taille="22"></span>
+                        <h3>Gestion des cours</h3>
+                        <p>L’enseignant crée et organise ses cours. Chaque examen est rattaché à un cours.</p>
+                    </article>
+                    <article class="carte fonction">
+                        <span class="pastille" data-icone="file-text" data-taille="22"></span>
+                        <h3>Examens à choix multiples</h3>
+                        <p>Choix unique, choix multiple ou vrai/faux, avec points par question, explications et durée
+                            personnalisée.</p>
+                    </article>
+                    <article class="carte fonction">
+                        <span class="pastille" data-icone="clock" data-taille="22"></span>
+                        <h3>Chronomètre automatique</h3>
+                        <p>Le temps est décompté à partir de l’heure de début de la tentative : recharger la page ne relance pas le chronomètre, et l’examen est clôturé quand le temps est écoulé.
+                        </p>
+                    </article>
+                    <article class="carte fonction">
+                        <span class="pastille" data-icone="check-circle" data-taille="22"></span>
+                        <h3>Correction automatique</h3>
+                        <p>La note est calculée et enregistrée dès l’envoi. La correction détaillée s’ouvre quand les
+                            tentatives sont épuisées.</p>
+                    </article>
+                    <article class="carte fonction">
+                        <span class="pastille" data-icone="bar-chart" data-taille="22"></span>
+                        <h3>Résultats et statistiques</h3>
+                        <p>Recherche, tri et copies des étudiants pour l’enseignant. Graphique d’évolution et export CSV
+                            pour l’étudiant.</p>
+                    </article>
+                    <article class="carte fonction">
+                        <span class="pastille" data-icone="shield" data-taille="22"></span>
+                        <h3>Sécurité et confort</h3>
+                        <p>Mots de passe chiffrés, accès par jeton, thème clair ou sombre et affichage adapté au
+                            téléphone.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= FONCTIONNEMENT ================= -->
+        <section class="bloc alt" id="fonctionnement">
+            <div class="conteneur">
+                <div class="titre-section">
+                    <span class="etiquette">Fonctionnement</span>
+                    <h2>Comment ça marche ?</h2>
+                    <p>De la création de l’examen à la note finale, en quatre étapes.</p>
+                </div>
+                <div class="etapes">
+                    <article class="carte etape">
+                        <h3>L’enseignant prépare</h3>
+                        <p>Il crée un cours puis un examen avec ses questions, ses choix et sa durée.</p>
+                    </article>
+                    <article class="carte etape">
+                        <h3>L’étudiant s’inscrit</h3>
+                        <p>Il crée son compte en quelques secondes et découvre les examens disponibles.</p>
+                    </article>
+                    <article class="carte etape">
+                        <h3>L’examen est chronométré</h3>
+                        <p>Dès le démarrage, le compte à rebours tourne. À zéro, les réponses partent automatiquement.
+                        </p>
+                    </article>
+                    <article class="carte etape">
+                        <h3>La note est immédiate</h3>
+                        <p>Le score s’affiche tout de suite et reste consultable dans « Mes résultats ».</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ESPACES ================= -->
+        <section class="bloc" id="espaces">
+            <div class="conteneur">
+                <div class="titre-section">
+                    <span class="etiquette">Mon espace</span>
+                    <h2>Enseignant ou étudiant ?</h2>
+                    <p>Choisissez votre profil pour accéder au bon espace.</p>
+                </div>
+                <div class="espaces">
+                    <article class="carte espace">
+                        <span class="pastille" data-icone="graduation-cap" data-taille="22"></span>
+                        <h3>Espace étudiant</h3>
+                        <p>Passez vos examens en ligne et suivez vos progrès.</p>
+                        <ul>
+                            <li><span data-icone="check"></span>Créer son compte gratuitement</li>
+                            <li><span data-icone="check"></span>Rechercher les examens par cours</li>
+                            <li><span data-icone="check"></span>Passer un examen chronométré, question par question</li>
+                            <li><span data-icone="check"></span>Voir sa note dès l’envoi</li>
+                            <li><span data-icone="check"></span>Suivre ses résultats et les exporter en CSV</li>
+                        </ul>
+                        <div class="actions">
+                            <a href="etudiant/connexion.html" class="bouton">Se connecter</a>
+                            <a href="etudiant/inscription.html" class="bouton secondaire">Créer un compte</a>
+                        </div>
+                    </article>
+                    <article class="carte espace">
+                        <span class="pastille" data-icone="shield" data-taille="22"></span>
+                        <h3>Espace enseignant</h3>
+                        <p>Gérez vos cours, vos examens et les résultats de vos étudiants.</p>
+                        <ul>
+                            <li><span data-icone="check"></span>Créer et organiser des cours</li>
+                            <li><span data-icone="check"></span>Construire des examens avec leurs questions</li>
+                            <li><span data-icone="check"></span>Consulter les résultats avec recherche et tri</li>
+                            <li><span data-icone="check"></span>Ouvrir les copies et autoriser de nouvelles tentatives
+                            </li>
+                            <li><span data-icone="check"></span>Suivre les statistiques et les utilisateurs inscrits
+                            </li>
+                        </ul>
+                        <div class="actions">
+                            <a href="admin/connexion.html" class="bouton">Se connecter</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= FAQ ================= -->
+        <section class="bloc alt" id="faq">
+            <div class="conteneur">
+                <div class="titre-section">
+                    <span class="etiquette">FAQ</span>
+                    <h2>Questions fréquentes</h2>
+                </div>
+                <div class="faq">
+                    <details>
+                        <summary>Puis-je repasser un examen ?</summary>
+                        <p>Cela dépend de l’examen : par défaut, une seule tentative est accordée, et l’enseignant peut
+                            autoriser de nouvelles tentatives. Quand c’est possible, le bouton « Nouvelle tentative »
+                            apparaît dans la liste des examens.</p>
+                    </details>
+                    <details>
+                        <summary>Que se passe-t-il si le temps est écoulé ?</summary>
+                        <p>Les réponses déjà données sont envoyées automatiquement. Les questions sans réponse comptent
+                            comme fausses.</p>
+                    </details>
+                    <details>
+                        <summary>Les étudiants peuvent-ils voir les bonnes réponses ?</summary>
+                        <p>Pas pendant l’examen : les bonnes réponses ne sont pas envoyées à la page de passage. La correction détaillée
+                            devient disponible quand l’étudiant a utilisé toutes ses tentatives.</p>
+                    </details>
+                    <details>
+                        <summary>Comment obtenir un compte enseignant ?</summary>
+                        <p>Le compte enseignant est créé automatiquement à la première ouverture du site (voir le fichier <strong>base_locale.js</strong>, rubrique « Compte administrateur »). Il n’existe pas d’inscription publique pour ce rôle.</p>
+                    </details>
+                    <details>
+                        <summary>Où sont enregistrées mes données ?</summary>
+                        <p>ExamPro fonctionne sans serveur : tout est enregistré dans le navigateur de cet appareil. Les comptes et les résultats créés sur un appareil n’apparaissent donc pas sur un autre. Effacer les données du site dans le navigateur supprime aussi la base.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= APPEL FINAL ================= -->
+        <section class="bloc">
+            <div class="conteneur">
+                <div class="carte appel">
+                    <div>
+                        <h2>Prêt à passer vos examens en ligne ?</h2>
+                        <p>Rejoignez ExamPro en quelques secondes.</p>
+                    </div>
+                    <div class="actions">
+                        <a href="etudiant/inscription.html" class="bouton accent grand">Créer mon compte étudiant</a>
+                        <a href="admin/connexion.html" class="bouton clair grand">Espace enseignant</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= PIED DE PAGE ================= -->
+    <footer>
+        <div class="conteneur">
+            <div class="liens-pied">
+                <a href="etudiant/connexion.html">Espace étudiant</a>
+                <a href="etudiant/inscription.html">Inscription</a>
+                <a href="admin/connexion.html">Espace enseignant</a>
+                <a href="#accueil">Haut de page</a>
+            </div>
+            <p>© <span id="annee"></span> ExamPro • Projet de programmation web avancée avec JavaScript</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============ 1. ICÔNES (SVG en ligne, trait fin) ============
+        const ICONES = {
+            "graduation-cap": '<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/><path d="M22 10v6"/>',
+            "book-open": '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+            "file-text": '<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
+            "clock": '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+            "check-circle": '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m22 4-10 10.01-3-3"/>',
+            "bar-chart": '<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+            "shield": '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+            "user": '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+            "check": '<path d="M20 6 9 17l-5-5"/>',
+            "sun": '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
+            "moon": '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/>',
+            "menu": '<path d="M4 6h16M4 12h16M4 18h16"/>',
+            "x": '<path d="M18 6 6 18M6 6l12 12"/>'
+        };
+
+        function icone(nom, taille = 18) {
+            return `<svg class="icone" width="${taille}" height="${taille}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICONES[nom] || ""}</svg>`;
+        }
+
+        document.querySelectorAll("[data-icone]").forEach(element => {
+            element.innerHTML = icone(element.dataset.icone, Number(element.dataset.taille) || 18);
+            if (element.matches(".boutons-hero span, .espace li span")) element.style.display = "inline-flex";
+        });
+
+        // ============ 2. THÈME CLAIR / SOMBRE ============
+        // Même clé « theme » que les espaces admin et étudiant : le choix est partagé.
+        const boutonTheme = document.getElementById("boutonTheme");
+
+        function majBoutonTheme() {
+            const sombre = document.documentElement.classList.contains("sombre");
+            boutonTheme.innerHTML = icone(sombre ? "sun" : "moon", 20);
+            boutonTheme.setAttribute("aria-label", sombre ? "Passer en mode clair" : "Passer en mode sombre");
+        }
+
+        boutonTheme.addEventListener("click", () => {
+            const sombre = document.documentElement.classList.toggle("sombre");
+            try { localStorage.setItem("theme", sombre ? "sombre" : "clair"); } catch (e) { }
+            majBoutonTheme();
+        });
+        majBoutonTheme();
+
+        // ============ 3. MENU (téléphone) ============
+        const boutonMenu = document.getElementById("boutonMenu");
+
+        function basculerMenu(ouvert) {
+            document.body.classList.toggle("menu-ouvert", ouvert);
+            boutonMenu.setAttribute("aria-expanded", String(ouvert));
+            boutonMenu.setAttribute("aria-label", ouvert ? "Fermer le menu" : "Ouvrir le menu");
+            boutonMenu.innerHTML = icone(ouvert ? "x" : "menu", 22);
+        }
+
+        boutonMenu.addEventListener("click", () => basculerMenu(!document.body.classList.contains("menu-ouvert")));
+        document.getElementById("liensBarre").addEventListener("click", (e) => { if (e.target.closest("a")) basculerMenu(false); });
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") basculerMenu(false); });
+        window.addEventListener("resize", () => { if (window.innerWidth > 800) basculerMenu(false); });
+        basculerMenu(false);
+
+        // ============ 4. DÉMONSTRATION INTERACTIVE ============
+        const questionDemo = {
+            texte: "Quel mot-clé JavaScript déclare une constante ?",
+            choix: ["var", "let", "const", "static"],
+            bonneReponse: 2
+        };
+
+        const zoneQuestion = document.getElementById("questionDemo");
+        const zoneChoix = document.getElementById("choixDemo");
+        const messageDemo = document.getElementById("messageDemo");
+        const boutonVerifier = document.getElementById("boutonVerifier");
+        const boutonRejouer = document.getElementById("boutonRejouer");
+        let choixSelectionne = null;
+
+        function afficherDemo() {
+            choixSelectionne = null;
+            zoneQuestion.textContent = questionDemo.texte;
+            zoneChoix.replaceChildren();
+
+            questionDemo.choix.forEach((texte, position) => {
+                const bouton = document.createElement("button");
+                bouton.type = "button";
+                bouton.className = "choix-demo";
+                bouton.innerHTML = `<span class="lettre">${String.fromCharCode(65 + position)}</span><span></span>`;
+                bouton.lastChild.textContent = texte;
+                bouton.addEventListener("click", () => {
+                    choixSelectionne = position;
+                    Array.from(zoneChoix.children).forEach((b, i) => b.classList.toggle("selectionne", i === position));
+                    boutonVerifier.disabled = false;
+                });
+                zoneChoix.appendChild(bouton);
+            });
+
+            messageDemo.textContent = "Choisissez une réponse.";
+            messageDemo.className = "";
+            boutonVerifier.disabled = true;
+            boutonVerifier.hidden = false;
+            boutonRejouer.hidden = true;
+        }
+
+        boutonVerifier.addEventListener("click", () => {
+            const juste = choixSelectionne === questionDemo.bonneReponse;
+            Array.from(zoneChoix.children).forEach((bouton, i) => {
+                bouton.disabled = true;
+                bouton.classList.remove("selectionne");
+                if (i === questionDemo.bonneReponse) bouton.classList.add("juste");
+                else if (i === choixSelectionne) bouton.classList.add("faux");
+            });
+            messageDemo.textContent = juste ? "Bonne réponse !" : "Mauvaise réponse : la bonne est « const ».";
+            messageDemo.className = juste ? "juste" : "faux";
+            boutonVerifier.hidden = true;
+            boutonRejouer.hidden = false;
+        });
+
+        boutonRejouer.addEventListener("click", afficherDemo);
+
+        // ============ 6. UTILISATEUR DÉJÀ CONNECTÉ ============
+        // Les pages admin et étudiant enregistrent « jeton » et « utilisateur » dans sessionStorage.
+        function afficherBandeauConnecte() {
+            let utilisateur = {};
+            try { utilisateur = JSON.parse(sessionStorage.getItem("utilisateur") || "{}"); } catch (e) { }
+            if (!sessionStorage.getItem("jeton") || !utilisateur.role) return;
+
+            const estAdmin = utilisateur.role === "admin";
+            document.getElementById("texteConnecte").textContent =
+                `Connecté en tant que ${utilisateur.nom} (${estAdmin ? "enseignant" : "étudiant"})`;
+            document.getElementById("lienEspace").href =
+                estAdmin ? "admin/tableau_de_bord.html" : "etudiant/tableau_de_bord.html";
+            document.getElementById("bandeauConnecte").hidden = false;
+        }
+
+        // ============ DÉMARRAGE ============
+        document.getElementById("annee").textContent = new Date().getFullYear();
+        afficherDemo();
+        afficherBandeauConnecte();
+    </script>
+</body>
+
+</html>

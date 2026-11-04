@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3a1020">
+    <title>ExamPro - Cours</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <link rel="stylesheet" href="css/admin.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+</head>
+
+<body data-page="cours">
+    <header id="entete"></header>
+    <main>
+        <div class="entete-page">
+            <div>
+                <h1>Gestion des cours</h1>
+                <p class="sous-titre">Créez les cours auxquels vos examens sont rattachés.</p>
+            </div>
+        </div>
+        <form id="formulaireCours" class="carte" novalidate>
+            <h2 id="titreFormulaire">Ajouter un cours</h2>
+            <div class="champ">
+                <label for="titre">Titre</label>
+                <input type="text" id="titre" placeholder="Ex : Mathématiques">
+            </div>
+            <div class="champ">
+                <label for="description">Description</label>
+                <textarea id="description" rows="3" maxlength="200"></textarea>
+            </div>
+            <div id="compteurCaracteres" class="compteur">0 / 200</div>
+            <div class="actions">
+                <button type="submit" id="boutonEnregistrer" class="bouton">Enregistrer</button>
+                <button type="button" id="boutonAnnuler" class="bouton secondaire" hidden>Annuler la modification</button>
+            </div>
+        </form>
+        <section class="carte">
+            <div class="barre-outils">
+                <div class="recherche">
+                    <span class="ico" data-icone="search"></span>
+                    <input type="search" id="recherche" placeholder="Rechercher un cours..." aria-label="Rechercher un cours">
+                </div>
+            </div>
+            <div class="tableau-defilant">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listeCours"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="../base_locale.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/commun.js"></script>
+    <script src="js/cours.js"></script>
+</body>
+
+</html>

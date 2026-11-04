@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#3a1020">
+    <title>ExamPro - Passer un examen</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <link rel="stylesheet" href="css/etudiant.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+</head>
+
+<body data-page="passer_examen">
+    <header id="entete"></header>
+    <main>
+
+        <!-- 1. Chargement -->
+        <section id="zoneChargement" class="carte resultat zone-centree">
+            <p class="vide">Chargement de l'examen...</p>
+        </section>
+
+        <!-- 2. Erreur (examen déjà passé, temps écoulé, introuvable...) -->
+        <section id="zoneErreur" class="carte resultat zone-centree" hidden>
+            <span class="pastille-grande erreur" data-icone="alert-circle" data-taille="28"></span>
+            <h2>Examen indisponible</h2>
+            <p id="messageErreur"></p>
+            <div class="actions-centre">
+                <a href="examens.html" class="bouton">Retour aux examens</a>
+                <a href="resultats.html" class="bouton secondaire">Mes résultats</a>
+            </div>
+        </section>
+
+        <!-- 2b. Écran d'accueil : le chronomètre démarre seulement au clic sur « Commencer » -->
+        <section id="zoneAccueil" class="carte resultat zone-centree" hidden>
+            <span class="pastille-grande" data-icone="file-text" data-taille="28"></span>
+            <h2 id="accueilTitre"></h2>
+            <p id="accueilCours"></p>
+            <ul id="accueilInfos" class="liste-infos"></ul>
+            <p>Le chronomètre démarre dès que vous cliquez sur « Commencer » et ne s'arrête pas, même si vous quittez la page.</p>
+            <div class="actions-centre">
+                <button type="button" id="boutonCommencer" class="bouton succes"><span data-icone="play"></span>Commencer l'examen</button>
+                <a href="examens.html" class="bouton secondaire">Retour aux examens</a>
+            </div>
+        </section>
+
+        <!-- 3. Examen en cours -->
+        <section id="zoneExamen" hidden>
+            <div class="carte barre-examen">
+                <div>
+                    <h1 id="titreExamen"></h1>
+                    <small id="coursExamen"></small>
+                </div>
+                <div class="chrono" id="chrono">
+                    <span class="icone-chrono" data-icone="clock" data-taille="22"></span>
+                    <div>
+                        <span>Temps restant</span>
+                        <strong id="tempsRestant" role="timer">--:--</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progression">
+                <div id="barreProgression"></div>
+            </div>
+            <p id="texteProgression"></p>
+
+            <article class="carte carte-question">
+                <div class="ligne-entete">
+                    <strong class="titre-question" id="numeroQuestion"></strong>
+                    <button type="button" id="boutonMarquer" class="bouton secondaire petit"></button>
+                </div>
+                <h2 id="texteQuestion"></h2>
+                <p class="indice-question" id="indiceQuestion"></p>
+                <div id="listeChoix"></div>
+                <p class="aide-clavier">Raccourcis : ← → pour changer de question, A B C D pour répondre.</p>
+            </article>
+
+            <section class="carte">
+                <h2>Navigation</h2>
+                <div class="pastilles" id="pastilles"></div>
+                <p class="legende">
+                    <span><i class="l-courante"></i>Question actuelle</span>
+                    <span><i class="l-repondue"></i>Répondue</span>
+                    <span><i class="l-marquee"></i>Marquée pour révision</span>
+                </p>
+            </section>
+
+            <div class="actions-examen">
+                <button type="button" id="boutonPrecedent" class="bouton secondaire"></button>
+                <button type="button" id="boutonSuivant" class="bouton"></button>
+                <button type="button" id="boutonTerminer" class="bouton succes"></button>
+            </div>
+        </section>
+
+        <!-- 4. Résultat final -->
+        <section id="zoneResultat" class="carte resultat zone-centree-large" hidden>
+            <h2>Examen terminé</h2>
+            <div class="cercle-note" id="cercleNote">
+                <strong id="pourcentageFinal">0</strong><span>%</span>
+            </div>
+            <p id="scoreFinal"></p>
+            <p id="messageFinal"></p>
+            <p id="noteCorrection" class="note-info" hidden><span data-icone="info"></span><span>La correction sera disponible quand vous aurez utilisé toutes vos tentatives.</span></p>
+            <div class="actions-centre">
+                <a href="resultats.html" class="bouton">Mes résultats</a>
+                <a href="examens.html" class="bouton secondaire">Autres examens</a>
+            </div>
+            <div id="zoneCorrection" class="zone-correction"></div>
+        </section>
+
+    </main>
+    <script src="../base_locale.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/commun.js"></script>
+    <script src="js/passer_examen.js"></script>
+</body>
+
+</html>

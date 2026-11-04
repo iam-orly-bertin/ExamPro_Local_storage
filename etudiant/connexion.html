@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#3a1020">
+    <title>ExamPro - Connexion étudiant</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <link rel="stylesheet" href="css/etudiant.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+</head>
+
+<body data-page="connexion">
+    <main class="connexion">
+        <aside class="connexion-marque">
+            <a class="logo" href="connexion.html" aria-label="ExamPro">
+                <span class="logo-marque" data-icone="graduation-cap" data-taille="20"></span>
+                <span class="logo-texte"><strong>ExamPro</strong><small>Espace étudiant</small></span>
+            </a>
+            <div>
+                <h2>Passez vos examens et suivez vos résultats.</h2>
+                <p>Connectez-vous pour accéder à vos examens, à vos notes et à vos corrections.</p>
+                <ul>
+                    <li><span class="puce" data-icone="clock" data-taille="18"></span>Un chronomètre clair pour chaque examen</li>
+                    <li><span class="puce" data-icone="bar-chart" data-taille="18"></span>Vos notes et votre progression au même endroit</li>
+                    <li><span class="puce" data-icone="check-circle" data-taille="18"></span>Des corrections détaillées pour progresser</li>
+                </ul>
+            </div>
+        </aside>
+        <section class="connexion-formulaire">
+            <form id="formulaireConnexion" novalidate>
+                <h1>Connexion</h1>
+                <p class="sous-titre">Espace réservé aux étudiants.</p>
+                <div class="champ">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="etudiant@exemple.com" autocomplete="username">
+                </div>
+                <div class="champ">
+                    <label for="motDePasse">Mot de passe</label>
+                    <div class="mot-de-passe">
+                        <input type="password" id="motDePasse" autocomplete="current-password">
+                        <button type="button" id="afficherMotDePasse" class="bascule-mot-de-passe" aria-label="Afficher le mot de passe" aria-pressed="false"></button>
+                    </div>
+                </div>
+                <button type="submit" id="boutonConnexion" class="bouton">Se connecter</button>
+                <p class="lien-bas">Pas encore de compte ? <a href="inscription.html">Créer un compte</a></p>
+            </form>
+        </section>
+    </main>
+    <script src="../base_locale.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/commun.js"></script>
+    <script src="js/connexion.js"></script>
+</body>
+
+</html>

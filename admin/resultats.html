@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3a1020">
+    <title>ExamPro - Résultats</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <link rel="stylesheet" href="css/admin.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+</head>
+
+<body data-page="resultats">
+    <header id="entete"></header>
+    <main>
+        <div class="entete-page">
+            <div>
+                <h1>Résultats des étudiants</h1>
+                <p class="sous-titre">Consultez les notes, ouvrez les copies et autorisez de nouvelles tentatives.</p>
+            </div>
+        </div>
+        <section class="grille">
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="clipboard-check" data-taille="22"></span>
+                <div class="stat-texte"><strong id="nbResultats">0</strong><span>Résultats</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="trending-up" data-taille="22"></span>
+                <div class="stat-texte"><strong id="moyenne">0 %</strong><span>Moyenne</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="award" data-taille="22"></span>
+                <div class="stat-texte"><strong id="meilleure">0 %</strong><span>Meilleure note</span></div>
+            </article>
+        </section>
+        <section class="carte">
+            <div class="barre-outils">
+                <div class="recherche">
+                    <span class="ico" data-icone="search"></span>
+                    <input type="search" id="recherche" placeholder="Rechercher par étudiant, email ou examen..." aria-label="Rechercher un résultat">
+                </div>
+            </div>
+            <div class="tableau-defilant">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-cle="etudiant_nom">Étudiant</th>
+                            <th data-cle="examen_titre">Examen</th>
+                            <th data-cle="score">Note</th>
+                            <th data-cle="pourcentage">Pourcentage</th>
+                            <th data-cle="date_passage">Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listeResultats"></tbody>
+                </table>
+            </div>
+        </section>
+        <dialog id="dialogueCopie" class="dialogue-copie">
+            <div id="contenuCopie"></div>
+            <div class="actions"><button type="button" id="fermerCopie" class="bouton secondaire">Fermer</button></div>
+        </dialog>
+    </main>
+    <script src="../base_locale.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/commun.js"></script>
+    <script src="js/resultats.js"></script>
+</body>
+
+</html>

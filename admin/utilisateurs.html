@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3a1020">
+    <title>ExamPro - Utilisateurs</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <link rel="stylesheet" href="css/admin.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+</head>
+
+<body data-page="utilisateurs">
+    <header id="entete"></header>
+    <main>
+        <div class="entete-page">
+            <div>
+                <h1>Utilisateurs</h1>
+                <p class="sous-titre">Étudiants et administrateurs inscrits sur la plateforme.</p>
+            </div>
+        </div>
+        <section class="grille">
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="users" data-taille="22"></span>
+                <div class="stat-texte"><strong id="totalUtilisateurs">0</strong><span>Total</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="graduation-cap" data-taille="22"></span>
+                <div class="stat-texte"><strong id="totalEtudiants">0</strong><span>Étudiants</span></div>
+            </article>
+            <article class="carte stat">
+                <span class="stat-icone" data-icone="shield" data-taille="22"></span>
+                <div class="stat-texte"><strong id="totalAdmins">0</strong><span>Administrateurs</span></div>
+            </article>
+        </section>
+        <section class="carte">
+            <div class="barre-outils">
+                <div class="recherche">
+                    <span class="ico" data-icone="search"></span>
+                    <input type="search" id="recherche" placeholder="Rechercher par nom ou email..." aria-label="Rechercher un utilisateur">
+                </div>
+                <select id="filtreRole" aria-label="Filtrer par rôle">
+                    <option value="tous">Tous les rôles</option>
+                    <option value="etudiant">Étudiants</option>
+                    <option value="admin">Administrateurs</option>
+                </select>
+            </div>
+            <div class="tableau-defilant">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Rôle</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listeUtilisateurs"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="../base_locale.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/commun.js"></script>
+    <script src="js/utilisateurs.js"></script>
+</body>
+
+</html>

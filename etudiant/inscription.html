@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#3a1020">
+    <title>ExamPro - Inscription étudiant</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap">
+    <link rel="stylesheet" href="css/etudiant.css">
+    <script>try { var t = localStorage.getItem("theme"); if (t ? t === "sombre" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("sombre"); } catch (e) { }</script>
+</head>
+
+<body data-page="inscription">
+    <main class="connexion">
+        <aside class="connexion-marque">
+            <a class="logo" href="connexion.html" aria-label="ExamPro">
+                <span class="logo-marque" data-icone="graduation-cap" data-taille="20"></span>
+                <span class="logo-texte"><strong>ExamPro</strong><small>Espace étudiant</small></span>
+            </a>
+            <div>
+                <h2>Créez votre compte en une minute.</h2>
+                <p>Rejoignez ExamPro pour passer vos examens en ligne et consulter vos résultats à tout moment.</p>
+                <ul>
+                    <li><span class="puce" data-icone="clock" data-taille="18"></span>Un chronomètre clair pour chaque examen</li>
+                    <li><span class="puce" data-icone="bar-chart" data-taille="18"></span>Vos notes et votre progression au même endroit</li>
+                    <li><span class="puce" data-icone="check-circle" data-taille="18"></span>Des corrections détaillées pour progresser</li>
+                </ul>
+            </div>
+        </aside>
+        <section class="connexion-formulaire">
+            <form id="formulaireInscription" novalidate>
+                <h1>Créer un compte</h1>
+                <p class="sous-titre">Inscription réservée aux étudiants.</p>
+                <div class="champ">
+                    <label for="nom">Nom complet</label>
+                    <input type="text" id="nom" placeholder="Votre nom" autocomplete="name">
+                </div>
+                <div class="champ">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="etudiant@exemple.com" autocomplete="email">
+                </div>
+                <div class="champ">
+                    <label for="motDePasse">Mot de passe (8 caractères minimum)</label>
+                    <div class="mot-de-passe">
+                        <input type="password" id="motDePasse" autocomplete="new-password">
+                        <button type="button" id="afficherMotDePasse" class="bascule-mot-de-passe" aria-label="Afficher les mots de passe" aria-pressed="false"></button>
+                    </div>
+                    <div class="force" aria-hidden="true"><div id="barreForce"></div></div>
+                    <small id="texteForce" aria-live="polite"></small>
+                </div>
+                <div class="champ">
+                    <label for="confirmation">Confirmer le mot de passe</label>
+                    <input type="password" id="confirmation" autocomplete="new-password">
+                </div>
+                <button type="submit" id="boutonInscription" class="bouton">S'inscrire</button>
+                <p class="lien-bas">Déjà un compte ? <a href="connexion.html">Se connecter</a></p>
+            </form>
+        </section>
+    </main>
+    <script src="../base_locale.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/commun.js"></script>
+    <script src="js/inscription.js"></script>
+</body>
+
+</html>
